@@ -2,10 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.png') }}">
     <title>GeoIP - Pays autorisés</title>
@@ -28,8 +25,8 @@
             --tag-text: #1e40af;
             --danger-hover: #fee2e2;
             --danger-text: #dc2626;
-            --shadow:
-                0 20px 45px rgba(15, 23, 42, 0.08);
+            --disabled: #94a3b8;
+            --shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
         }
 
         * {
@@ -41,21 +38,10 @@
             min-height: 100vh;
             padding: 48px 20px;
             background:
-                radial-gradient(
-                    circle at top left,
-                    #dbeafe 0,
-                    transparent 30%
-                ),
+                radial-gradient(circle at top left, #dbeafe 0, transparent 30%),
                 var(--background);
             color: var(--text);
-            font-family:
-                Inter,
-                ui-sans-serif,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         .container {
@@ -64,8 +50,10 @@
             margin: 0 auto;
         }
 
+        /* ---------- En-tête ---------- */
+
         .page-header {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
         }
 
         .page-header__label {
@@ -92,6 +80,50 @@
             font-size: 16px;
             line-height: 1.6;
         }
+
+        /* ---------- Barre de déverrouillage ---------- */
+
+        .unlock-bar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .unlock-bar form {
+            display: flex;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .unlock-status {
+            color: var(--success-text);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* ---------- Messages ---------- */
+
+        .message {
+            margin-bottom: 18px;
+            padding: 13px 16px;
+            border-radius: 11px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .message--success {
+            background: var(--success-background);
+            color: var(--success-text);
+        }
+
+        .message--error {
+            background: var(--error-background);
+            color: var(--error-text);
+        }
+
+        /* ---------- Carte et sections ---------- */
 
         .card {
             padding: 30px;
@@ -120,6 +152,12 @@
             font-size: 18px;
         }
 
+        .section-description {
+            margin: -6px 0 14px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
         .counter {
             padding: 5px 10px;
             border-radius: 999px;
@@ -128,6 +166,17 @@
             font-size: 13px;
             font-weight: 700;
         }
+
+        .empty-state {
+            padding: 24px;
+            border: 1px dashed var(--border);
+            border-radius: 12px;
+            background: var(--surface-secondary);
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        /* ---------- Pays actifs ---------- */
 
         .country-list {
             display: flex;
@@ -174,30 +223,16 @@
             cursor: pointer;
             font-size: 20px;
             line-height: 1;
-            transition:
-                background 150ms ease,
-                color 150ms ease,
-                transform 150ms ease;
+            transition: background 150ms ease, color 150ms ease, transform 150ms ease;
         }
 
-        .delete-button:hover {
+        .delete-button:hover:not(:disabled) {
             background: var(--danger-hover);
             color: var(--danger-text);
             transform: scale(1.05);
         }
 
-        .delete-button:focus-visible,
-        select:focus-visible,
-        .add-button:focus-visible {
-            outline: 3px solid rgba(37, 99, 235, 0.25);
-            outline-offset: 2px;
-        }
-
-        .add-form {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 12px;
-        }
+        /* ---------- Formulaires ---------- */
 
         select {
             width: 100%;
@@ -215,61 +250,105 @@
             border-color: #94a3b8;
         }
 
-        .add-button {
+        .add-form {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+        }
+
+        .pin-input {
+            width: 160px;
+            min-height: 44px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            background: var(--surface);
+            color: var(--text);
+            font: inherit;
+            font-size: 16px;
+            letter-spacing: 0.3em;
+            text-align: center;
+        }
+
+        /* ---------- Boutons ---------- */
+
+        .btn {
             min-height: 48px;
             padding: 0 22px;
-            border: 0;
             border-radius: 11px;
-            background: var(--primary);
-            color: #ffffff;
             cursor: pointer;
             font: inherit;
             font-weight: 700;
-            transition:
-                background 150ms ease,
-                transform 150ms ease,
-                box-shadow 150ms ease;
+            transition: background 150ms ease, box-shadow 150ms ease, transform 150ms ease;
         }
 
-        .add-button:hover {
+        .btn--small {
+            min-height: 44px;
+        }
+
+        .add-button {
+            border: 0;
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        .add-button:hover:not(:disabled) {
             background: var(--primary-hover);
             box-shadow: 0 8px 18px rgba(37, 99, 235, 0.24);
             transform: translateY(-1px);
         }
 
-        .add-button:disabled {
-            background: #94a3b8;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
+        .reload-button {
+            border: 1px solid var(--primary);
+            background: var(--surface);
+            color: var(--primary);
         }
 
-        .empty-state {
-            padding: 24px;
-            border: 1px dashed var(--border);
-            border-radius: 12px;
+        .reload-button:hover:not(:disabled) {
+            background: var(--tag-background);
+        }
+
+        .stop-button {
+            border: 1px solid var(--danger-text);
+            background: var(--surface);
+            color: var(--danger-text);
+        }
+
+        .stop-button:hover:not(:disabled) {
+            background: var(--danger-hover);
+        }
+
+        .secondary-button {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .secondary-button:hover {
             background: var(--surface-secondary);
-            color: var(--text-secondary);
-            text-align: center;
         }
 
-        .message {
-            margin-bottom: 18px;
-            padding: 13px 16px;
-            border-radius: 11px;
-            font-size: 14px;
-            font-weight: 600;
+        button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
         }
 
-        .message--success {
-            background: var(--success-background);
-            color: var(--success-text);
+        .delete-button:disabled {
+            opacity: 0.35;
         }
 
-        .message--error {
-            background: var(--error-background);
-            color: var(--error-text);
+        .add-button:disabled {
+            background: var(--disabled);
         }
+
+        button:focus-visible,
+        select:focus-visible,
+        .pin-input:focus-visible {
+            outline: 3px solid rgba(37, 99, 235, 0.25);
+            outline-offset: 2px;
+        }
+
+        /* ---------- Pied de page ---------- */
 
         .configuration-info {
             margin-top: 24px;
@@ -282,40 +361,11 @@
 
         .configuration-info code {
             color: var(--text);
-            font-family:
-                "SFMono-Regular",
-                Consolas,
-                "Liberation Mono",
-                monospace;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
             font-weight: 600;
         }
-        .section-description {
-            margin: -6px 0 14px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
 
-        .reload-button {
-            min-height: 48px;
-            padding: 0 22px;
-            border: 1px solid var(--primary);
-            border-radius: 11px;
-            background: var(--surface);
-            color: var(--primary);
-            cursor: pointer;
-            font: inherit;
-            font-weight: 700;
-            transition: background 150ms ease;
-        }
-
-        .reload-button:hover {
-            background: var(--tag-background);
-        }
-
-        .reload-button:focus-visible {
-            outline: 3px solid rgba(37, 99, 235, 0.25);
-            outline-offset: 2px;
-        }
+        /* ---------- Responsive ---------- */
 
         @media (max-width: 640px) {
             body {
@@ -325,6 +375,19 @@
             .card {
                 padding: 22px 18px;
                 border-radius: 18px;
+            }
+
+            .unlock-bar {
+                justify-content: stretch;
+            }
+
+            .unlock-bar form {
+                width: 100%;
+            }
+
+            .unlock-bar .pin-input {
+                flex: 1;
+                width: auto;
             }
 
             .add-form {
@@ -342,59 +405,10 @@
             .country-tag__name {
                 flex: 1;
             }
-        }
-        .reload-form {
-            display: grid;
-            grid-template-columns: auto minmax(0, 200px);
-            gap: 12px;
-            align-items: center;
-        }
 
-        .reload-button:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-            background: var(--surface);
-        }
-
-        .pin-input {
-            width: 100%;
-            min-height: 48px;
-            padding: 0 14px;
-            border: 1px solid var(--border);
-            border-radius: 11px;
-            background: var(--surface);
-            color: var(--text);
-            font: inherit;
-            font-size: 18px;
-            letter-spacing: 0.3em;
-            text-align: center;
-        }
-
-        .pin-input:focus-visible {
-            outline: 3px solid rgba(37, 99, 235, 0.25);
-            outline-offset: 2px;
-        }
-
-        @media (max-width: 640px) {
-            .reload-form {
-                grid-template-columns: 1fr;
+            .section-header .pin-input {
+                width: 100%;
             }
-        }
-        .add-form {
-            grid-template-columns: minmax(0, 1fr) 130px auto;
-        }
-        .section-header .pin-input {
-            width: 160px;
-            min-height: 40px;
-            font-size: 16px;
-        }
-
-        .delete-button:disabled {
-            opacity: 0.35;
-            cursor: not-allowed;
-            background: transparent;
-            color: var(--tag-text);
-            transform: none;
         }
     </style>
 </head>
@@ -413,68 +427,74 @@
                 Les modifications sont directement enregistrées dans
                 le fichier de configuration.
             </p>
+
+            <div class="unlock-bar">
+                {% if unlocked %}
+                    <span class="unlock-status">Déverrouillé ({{ unlock_minutes }} min)</span>
+                    <form action="{{ url_for('lock') }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn--small secondary-button" type="submit">
+                            Verrouiller
+                        </button>
+                    </form>
+                {% else %}
+                    <form action="{{ url_for('unlock') }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input
+                            class="pin-input"
+                            type="password"
+                            name="pin"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            placeholder="Code PIN"
+                            aria-label="Code PIN"
+                            required
+                        >
+                        <button class="btn btn--small add-button" type="submit">
+                            Déverrouiller
+                        </button>
+                    </form>
+                {% endif %}
+            </div>
         </header>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% for category, message in messages %}
-                <div
-                    class="message
-                    {% if category == 'error' %}
-                        message--error
-                    {% else %}
-                        message--success
-                    {% endif %}"
-                >
+                <div class="message {{ 'message--error' if category == 'error' else 'message--success' }}">
                     {{ message }}
                 </div>
             {% endfor %}
         {% endwith %}
 
         <div class="card">
+            <!-- Pays actifs -->
             <section class="section">
                 <div class="section-header">
                     <h2>Pays actifs</h2>
-                
-                    {% if active_countries %}
-                        <input
-                            class="pin-input"
-                            type="password"
-                            id="shared-pin"
-                            inputmode="numeric"
-                            autocomplete="off"
-                            placeholder="Code PIN"
-                            aria-label="Code PIN pour supprimer un pays"
-                        >
-                    {% endif %}
-                
                     <span class="counter">
-                        {{ active_countries|length }}
-                        pays
+                        {{ active_countries|length }} pays
                     </span>
                 </div>
-            
+
                 {% if active_countries %}
                     <div class="country-list">
                         {% for country in active_countries %}
                             <div class="country-tag">
                                 <span class="country-tag__code">{{ country.code }}</span>
                                 <span class="country-tag__name">{{ country.name }}</span>
-                            
+
                                 <form
                                     class="delete-form"
                                     action="{{ url_for('remove_country', code=country.code) }}"
                                     method="post"
-                                    data-remove-form
                                 >
                                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" name="pin" value="">
                                     <button
                                         class="delete-button"
                                         type="submit"
                                         title="Supprimer {{ country.name }}"
                                         aria-label="Supprimer {{ country.name }}"
-                                        data-pin-button
-                                        disabled
+                                        {% if not unlocked %}disabled{% endif %}
                                     >
                                         &times;
                                     </button>
@@ -489,112 +509,72 @@
                 {% endif %}
             </section>
 
+            <!-- Ajouter un pays -->
             <section class="section">
                 <div class="section-header">
                     <h2>Ajouter un pays</h2>
                 </div>
-            
-                <form
-                    class="add-form"
-                    action="{{ url_for('add_country') }}"
-                    method="post"
-                    data-pin-form
-                    data-blocked="{{ 'true' if not available_countries else 'false' }}"
-                >
+
+                <form class="add-form" action="{{ url_for('add_country') }}" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            
+
                     <select name="country_code" required aria-label="Pays à ajouter">
                         <option value="">Sélectionner un pays...</option>
                         {% for code, name in available_countries %}
                             <option value="{{ code }}">{{ name }} - {{ code }}</option>
                         {% endfor %}
                     </select>
-                
-                    <input
-                        class="pin-input"
-                        type="password"
-                        name="pin"
-                        inputmode="numeric"
-                        autocomplete="off"
-                        placeholder="Code PIN"
-                        aria-label="Code PIN"
-                        required
+
+                    <button
+                        class="btn add-button"
+                        type="submit"
+                        {% if not unlocked or not available_countries %}disabled{% endif %}
                     >
-                
-                    <button class="add-button" type="submit" data-pin-button disabled>
                         Ajouter le pays
                     </button>
                 </form>
             </section>
+
+            <!-- Appliquer la configuration -->
             <section class="section">
                 <div class="section-header">
                     <h2>Appliquer la configuration</h2>
                 </div>
-            
+
                 <p class="section-description">
                     Recharge Nginx pour prendre en compte les modifications de la liste des pays.
                 </p>
-            
-                <form
-                    class="reload-form"
-                    action="{{ url_for('reload_nginx_route') }}"
-                    method="post"
-                    data-pin-form
-                >
+
+                <form action="{{ url_for('reload_nginx_route') }}" method="post">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            
-                    <button class="reload-button" type="submit" data-pin-button disabled>
+                    <button class="btn reload-button" type="submit" {% if not unlocked %}disabled{% endif %}>
                         Recharger Nginx
                     </button>
-                
-                    <input
-                        class="pin-input"
-                        type="password"
-                        name="pin"
-                        inputmode="numeric"
-                        autocomplete="off"
-                        placeholder="Code PIN"
-                        aria-label="Code PIN"
-                        required
-                    >
                 </form>
             </section>
 
-            <script>
-                (function () {
-                    // Formulaires avec leur propre champ PIN (ajout, rechargement)
-                    document.querySelectorAll("form[data-pin-form]").forEach(function (form) {
-                        const pinInput = form.querySelector(".pin-input");
-                        const button = form.querySelector("[data-pin-button]");
-                        const blocked = form.dataset.blocked === "true";
-                    
-                        function update() {
-                            button.disabled = blocked || pinInput.value.trim() === "";
-                        }
-                    
-                        pinInput.addEventListener("input", update);
-                        update();
-                    });
-                
-                    // Champ PIN partagé pour la suppression des pays
-                    const sharedPin = document.getElementById("shared-pin");
-                    const removeForms = document.querySelectorAll("form[data-remove-form]");
-                
-                    function syncRemoveForms() {
-                        const value = sharedPin ? sharedPin.value.trim() : "";
-                    
-                        removeForms.forEach(function (form) {
-                            form.querySelector('input[name="pin"]').value = value;
-                            form.querySelector("[data-pin-button]").disabled = value === "";
-                        });
-                    }
-                
-                    if (sharedPin) {
-                        sharedPin.addEventListener("input", syncRemoveForms);
-                    }
-                    syncRemoveForms();
-                })();
-            </script>
+            <!-- Arrêter l'application -->
+            <section class="section">
+                <div class="section-header">
+                    <h2>Arrêter l'application</h2>
+                </div>
+
+                <p class="section-description">
+                    Arrête le processus GeoBlockEditor. Il devra être relancé depuis le script Unraid.
+                </p>
+
+                <form
+                    action="{{ url_for('stop_app') }}"
+                    method="post"
+                    onsubmit="return confirm('Arrêter GeoBlockEditor ? Il faudra le relancer manuellement.');"
+                >
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button class="btn stop-button" type="submit" {% if not unlocked %}disabled{% endif %}>
+                        Arrêter l'application
+                    </button>
+                </form>
+            </section>
+
             <div class="configuration-info">
                 Fichier modifié : <code>{{ config_file }}</code><br>
                 Commande de rechargement : <code>{{ reload_command }}</code>
