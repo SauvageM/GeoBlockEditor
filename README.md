@@ -50,7 +50,7 @@ Toute la configuration passe par des variables d'environnement. Les valeurs par 
 | Variable | Défaut | Rôle |
 |---|---|---|
 | `APP_PIN` | *(vide)* | Code PIN qui déverrouille l'interface. Si vide, aucune action n'est possible. |
-| `UNLOCK_MINUTES` | `30` | Durée du déverrouillage avant reverrouillage automatique. |
+| `UNLOCK_MINUTES` | `10` | Durée du déverrouillage avant reverrouillage automatique. |
 | `FLASK_SECRET_KEY` | *(aléatoire)* | Clé de signature des sessions et tokens CSRF. Si elle n'est pas fixée, le déverrouillage est perdu à chaque démarrage. |
 | `HOST` | `0.0.0.0` | Adresse d'écoute. |
 | `PORT` | `5000` | Port d'écoute. |
