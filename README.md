@@ -34,13 +34,14 @@ L'interface est alors accessible sur `http://localhost:5000`.
 GeoBlockEditor/
 ├── app.py
 ├── requirements.txt
+├── Readme.md
 ├── data/
-│ ├── available_countries.json # pays proposés (fourni)
-│ └── active_countries.json # créé automatiquement
+│   ├── available_countries.json   # pays proposés (fourni)
+│   └── active_countries.json      # créé automatiquement
 ├── nginx/
-│ └── geoip.conf # généré automatiquement
+│   └── geoip.conf                 # généré automatiquement
 └── templates/
-└── index.html
+    └── index.html
 
 ## Configuration
 
