@@ -31,6 +31,7 @@ python app.py
 L'interface est alors accessible sur `http://localhost:5000`.
 
 ## Structure du projet
+```
 GeoBlockEditor/
 ├── app.py
 ├── requirements.txt
@@ -42,6 +43,7 @@ GeoBlockEditor/
 │   └── geoip.conf                 # généré automatiquement
 └── templates/
     └── index.html
+```
 
 ## Configuration
 
